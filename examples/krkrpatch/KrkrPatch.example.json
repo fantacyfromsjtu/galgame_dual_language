@@ -1,0 +1,15 @@
+{
+  "gameExecutableFile": "Game.exe",
+  "gameCommandLine": "",
+  "logLevel": 4,
+  "patchProtocols": [
+    "archive://patch.xp3/",
+    "archive://scn.xp3/",
+    "archive://",
+    "arc://"
+  ],
+  "patchArchives": [
+    "dual_sub_patch.xp3"
+  ],
+  "patchNoProtocol": true
+}

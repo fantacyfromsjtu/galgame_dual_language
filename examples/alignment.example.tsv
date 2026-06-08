@@ -1,0 +1,2 @@
+source_json	scenario	scene_index	scene_label	text_id	block_index	speaker	display_name	voice	raw_text	plain_text	chs_text
+work/orig_json/example.ks.json	example.ks	0	*start	1	0		Voice	voice001_001	「Original example line.」	「Original example line.」	「Translated example line.」

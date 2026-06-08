@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Local work output
+work/
+_work/
+build/
+dist/
+out/
+extract/
+screens/
+logs/
+backup/
+tools/
+
+# Game resources and generated patches
+*.xp3
+*.xp3.sig
+*.pck
+*.scn
+*.ksd
+*.cfu
+*.exe
+*.dll
+*.pimg
+*.tft
+*.ttf
+*.ttc
+*.otf
+*.ogg
+*.opus
+*.amv
+*.mpg
+*.png
+*.jpg
+*.jpeg
+*.webp
+
+# Keep example docs even inside ignored example asset-like folders
+!examples/**/*.md
+!examples/**/*.json
+!examples/**/*.tsv
+!examples/**/*.ps1
+!examples/**/*.txt
