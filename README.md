@@ -1,5 +1,7 @@
 # Dual Subtitle Tool
 
+English | [简体中文](README.zh-CN.md)
+
 Dual Subtitle Tool is a small workflow repository for building bilingual in-game text patches for Kirikiri/KirikiriZ visual novels, especially games whose scenario scripts can be dumped and rebuilt through FreeMote-compatible M2/KRKR PSB JSON.
 
 It is not a one-click universal patcher. The useful part is the repeatable pipeline:
