@@ -133,7 +133,7 @@ python scripts\freemote_apply_bilingual.py --input-json work\orig_json\scene.ks.
 python scripts\tjs_patch_window_helptexts.py --default-tjs work\patch_stage\default.tjs --translations work\ui_hover_translation.tsv --draw-param quickmenu.help --fontface "Noto Sans SC"
 ```
 
-这不是完整 UI 汉化；标题页、设置面板和图片文字仍需要按游戏单独适配。
+该脚本写回 TJS 时会保留 UTF-16 LE 等 BOM 编码。这不是完整 UI 汉化；标题页、设置面板和图片文字仍需要按游戏单独适配。
 
 完整流程见 [docs/WORKFLOW.md](docs/WORKFLOW.md)，脚本逐项用法见 [docs/SCRIPTS.md](docs/SCRIPTS.md)。
 

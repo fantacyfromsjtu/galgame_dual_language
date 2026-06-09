@@ -22,6 +22,20 @@ HELP_LINE_RE = re.compile(
 )
 
 
+def detect_text_encoding(path: Path) -> tuple[str, str]:
+    """Return read/write encodings, preserving BOM-style script encodings."""
+    head = path.read_bytes()[:4]
+    if head.startswith(b"\xff\xfe") or head.startswith(b"\xfe\xff"):
+        return "utf-16", "utf-16"
+    if head.startswith(b"\xef\xbb\xbf"):
+        return "utf-8-sig", "utf-8-sig"
+    return "utf-8", "utf-8"
+
+
+def detect_newline(source: str) -> str:
+    return "\r\n" if "\r\n" in source else "\n"
+
+
 def escape_tjs_string(value: str) -> str:
     return value.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
 
@@ -53,6 +67,7 @@ def patch_window_helptexts(source: str, translations: dict[str, str]) -> tuple[s
     if not match:
         raise SystemExit("Could not find .windowHelpTexts = %[ ... ]; block")
 
+    newline = detect_newline(source)
     used: set[str] = set()
     patched_lines: list[str] = []
     for line in match.group("body").splitlines():
@@ -67,7 +82,7 @@ def patch_window_helptexts(source: str, translations: dict[str, str]) -> tuple[s
         else:
             patched_lines.append(line)
 
-    patched_body = "\n".join(patched_lines)
+    patched_body = newline.join(patched_lines)
     patched = (
         source[: match.start()]
         + match.group("head")
@@ -113,7 +128,8 @@ def main() -> int:
     if not translations:
         raise SystemExit("No translations loaded")
 
-    source = args.default_tjs.read_text(encoding="utf-8-sig")
+    read_encoding, write_encoding = detect_text_encoding(args.default_tjs)
+    source = args.default_tjs.read_text(encoding=read_encoding)
     patched, used = patch_window_helptexts(source, translations)
     if args.draw_param or args.fontface:
         if not (args.draw_param and args.fontface):
@@ -121,12 +137,15 @@ def main() -> int:
         patched = patch_draw_text_fontface(patched, args.draw_param, args.fontface)
 
     unused = sorted(set(translations) - used)
-    print(f"loaded={len(translations)} patched={len(used)} unused={len(unused)}")
+    print(
+        f"loaded={len(translations)} patched={len(used)} unused={len(unused)} "
+        f"encoding={write_encoding}"
+    )
     if unused:
         print("unused keys: " + ", ".join(unused), file=sys.stderr)
 
     if not args.dry_run and patched != source:
-        args.default_tjs.write_text(patched, encoding="utf-8", newline="\n")
+        args.default_tjs.write_text(patched, encoding=write_encoding, newline="")
     return 0
 
 

@@ -96,6 +96,8 @@ python scripts\freemote_apply_bilingual.py --input-json work\orig_json\scene.ks.
 
 Patches a `default.tjs` file whose `SystemConfig.windowHelpTexts` table drives quick-menu hover help. The TSV should contain a `key` column and a translated text column such as `zh`. Keys may be plain item names such as `save`, or dotted names such as `windowHelpTexts.save`.
 
+The script preserves BOM-based text encodings such as UTF-16 LE. This matters for Kirikiri/Yuzusoft system scripts because rewriting `default.tjs` as UTF-8 can change how some engine APIs see string values.
+
 ```powershell
 python scripts\tjs_patch_window_helptexts.py `
   --default-tjs work\patch_stage\default.tjs `

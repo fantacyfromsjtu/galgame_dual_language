@@ -134,7 +134,7 @@ Some Kirikiri/Yuzusoft games keep quick-menu hover captions in `default.tjs` und
 python scripts\tjs_patch_window_helptexts.py --default-tjs work\patch_stage\default.tjs --translations work\ui_hover_translation.tsv --draw-param quickmenu.help --fontface "Noto Sans SC"
 ```
 
-This is not a full UI translator; title screens, option panels, and image-based labels still need game-specific adapters.
+This helper preserves BOM-based encodings such as UTF-16 LE when writing TJS files. It is not a full UI translator; title screens, option panels, and image-based labels still need game-specific adapters.
 
 See [docs/WORKFLOW.md](docs/WORKFLOW.md) for the full process and [docs/SCRIPTS.md](docs/SCRIPTS.md) for script-by-script usage.
 
