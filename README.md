@@ -51,6 +51,7 @@ scripts/
   freemote_extract_texts.py      Extract text rows from FreeMote scenario JSON.
   freemote_apply_bilingual.py    Append translated lines to FreeMote scenario JSON.
   freemote_align_json.py         Audit original/translated FreeMote JSON pairs and write bilingual JSON.
+  tjs_patch_window_helptexts.py  Patch quick-menu style hover help text in default.tjs.
   align_memory_strings.py        Align translated memory strings to original rows.
   extract_cjk_strings.py         Extract CJK-looking strings from binary dumps.
   scan_process_cjk.py            Scan a Windows process for CJK strings.
@@ -70,6 +71,7 @@ examples/
   scenario_map.example.tsv
   json_alignment_overrides.example.tsv
   alignment.example.tsv
+  ui_hover_translation.example.tsv
 ```
 
 ## Quick Start
@@ -120,6 +122,16 @@ translated line
 ```
 
 The rebuilt scenario is then loaded by the game as an ordinary script override.
+
+## Optional UI Hover Help
+
+Some Kirikiri/Yuzusoft games keep quick-menu hover captions in `default.tjs` under `SystemConfig.windowHelpTexts`. For a small non-dialogue MVP, keep the original UI assets and replace only those hover captions:
+
+```powershell
+python scripts\tjs_patch_window_helptexts.py --default-tjs work\patch_stage\default.tjs --translations work\ui_hover_translation.tsv --draw-param quickmenu.help --fontface "Noto Sans SC"
+```
+
+This is not a full UI translator; title screens, option panels, choices, and image-based labels still need game-specific adapters.
 
 See [docs/WORKFLOW.md](docs/WORKFLOW.md) for the full process and [docs/SCRIPTS.md](docs/SCRIPTS.md) for script-by-script usage.
 

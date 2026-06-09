@@ -1,0 +1,5 @@
+context	key	ja	zh	note
+quickmenu	windowHelpTexts.save	セーブ画面	打开保存画面	quick menu hover help
+quickmenu	windowHelpTexts.load	ロード画面	打开读取画面	quick menu hover help
+quickmenu	windowHelpTexts.option	システム画面	打开系统设置	quick menu hover help
+quickmenu	windowHelpTexts.log	バックログ画面	打开历史记录	quick menu hover help

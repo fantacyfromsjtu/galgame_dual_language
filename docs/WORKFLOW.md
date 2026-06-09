@@ -179,6 +179,20 @@ work/patch_stage/
 
 Only include files you intend to override.
 
+### Optional: Patch Hover Help Text
+
+If the game stores quick-menu hover captions in `default.tjs` under `SystemConfig.windowHelpTexts`, you can add a small non-dialogue translation layer without replacing UI images:
+
+```powershell
+python scripts\tjs_patch_window_helptexts.py `
+  --default-tjs work\patch_stage\default.tjs `
+  --translations work\ui_hover_translation.tsv `
+  --draw-param quickmenu.help `
+  --fontface "Noto Sans SC"
+```
+
+This keeps the original buttons visible and changes only the text shown while the mouse is hovering. Treat title screens, option panels, and choices as separate adapters; they often use different scripts or image assets.
+
 ## 9. Pack XP3 Patch
 
 ```powershell

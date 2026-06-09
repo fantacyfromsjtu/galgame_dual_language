@@ -88,6 +88,22 @@ Applies an existing alignment TSV to one FreeMote JSON file. This is the fallbac
 python scripts\freemote_apply_bilingual.py --input-json work\orig_json\scene.ks.json --alignment work\aligned.tsv -o work\bilingual_json\scene.ks.json
 ```
 
+## TJS UI Helpers
+
+### `tjs_patch_window_helptexts.py`
+
+Patches a `default.tjs` file whose `SystemConfig.windowHelpTexts` table drives quick-menu hover help. The TSV should contain a `key` column and a translated text column such as `zh`. Keys may be plain item names such as `save`, or dotted names such as `windowHelpTexts.save`.
+
+```powershell
+python scripts\tjs_patch_window_helptexts.py `
+  --default-tjs work\patch_stage\default.tjs `
+  --translations work\ui_hover_translation.tsv `
+  --draw-param quickmenu.help `
+  --fontface "Noto Sans SC"
+```
+
+Use this only for hover-help style UI text. It does not translate image labels, option page widgets, title menus, or scenario choices.
+
 ## Alignment And Memory Helpers
 
 ### `align_memory_strings.py`
@@ -161,5 +177,6 @@ python scripts\parse_krkrdump_log.py KrkrDump.log work\krkrdump_mapping.csv
 - `examples/scenario_map.example.tsv`: minimal map for direct JSON alignment.
 - `examples/json_alignment_overrides.example.tsv`: row-merge override format.
 - `examples/alignment.example.tsv`: minimal alignment table for `freemote_apply_bilingual.py`.
+- `examples/ui_hover_translation.example.tsv`: minimal quick-menu hover translation table.
 - `examples/build_patch.ps1`: PowerShell helper for packing and optionally installing a patch archive.
 - `examples/krkrpatch/KrkrPatch.example.json`: runtime patch loader configuration example.

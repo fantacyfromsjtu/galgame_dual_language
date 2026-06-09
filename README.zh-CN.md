@@ -51,6 +51,7 @@ scripts/
   freemote_extract_texts.py      从 FreeMote 剧情 JSON 抽取文本行。
   freemote_apply_bilingual.py    将译文追加到 FreeMote 剧情 JSON。
   freemote_align_json.py         审计原文/译文 FreeMote JSON，并生成双语 JSON。
+  tjs_patch_window_helptexts.py  修改 default.tjs 中 quick menu 一类 hover 帮助文本。
   align_memory_strings.py        将内存中的译文字符串对齐到原文行。
   extract_cjk_strings.py         从二进制 dump 中抽取 CJK 字符串。
   scan_process_cjk.py            扫描 Windows 进程中的 CJK 字符串。
@@ -70,6 +71,7 @@ examples/
   scenario_map.example.tsv
   json_alignment_overrides.example.tsv
   alignment.example.tsv
+  ui_hover_translation.example.tsv
 ```
 
 ## 快速开始
@@ -120,6 +122,16 @@ python scripts\freemote_apply_bilingual.py --input-json work\orig_json\scene.ks.
 ```
 
 重编译后的剧情文件会作为普通脚本覆盖文件被游戏加载。
+
+## 可选：UI 悬浮提示
+
+部分 Kirikiri/Yuzusoft 游戏会把快捷菜单 hover 文案集中放在 `default.tjs` 的 `SystemConfig.windowHelpTexts` 中。做非正文 MVP 时，可以保留原 UI 贴图，只替换鼠标悬浮时出现的中文提示：
+
+```powershell
+python scripts\tjs_patch_window_helptexts.py --default-tjs work\patch_stage\default.tjs --translations work\ui_hover_translation.tsv --draw-param quickmenu.help --fontface "Noto Sans SC"
+```
+
+这不是完整 UI 汉化；标题页、设置面板、选择项和图片文字仍需要按游戏单独适配。
 
 完整流程见 [docs/WORKFLOW.md](docs/WORKFLOW.md)，脚本逐项用法见 [docs/SCRIPTS.md](docs/SCRIPTS.md)。
 
