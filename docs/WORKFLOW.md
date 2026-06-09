@@ -2,6 +2,8 @@
 
 This document describes the intended end-to-end workflow. Paths are examples; replace them with your own game and work directories.
 
+For command-by-command script details, see [SCRIPTS.md](SCRIPTS.md). For portability caveats, see [LIMITATIONS.md](LIMITATIONS.md).
+
 ## 1. Prepare Tools
 
 Required or commonly useful external tools:
@@ -37,6 +39,14 @@ Place JSON files in a directory such as:
 
 ```text
 work/orig_json/
+```
+
+For M2/KRKR PSB scenarios, the helper can batch decompile:
+
+```powershell
+python scripts\freemote_batch.py decompile `
+  --input-dir work\orig_scn `
+  --output-dir work\orig_json
 ```
 
 ## 4. Extract Original Text Rows
@@ -98,6 +108,28 @@ The output adds:
 
 Despite the `chs_text` column name, this can hold any translated language. The current script started from a Chinese/Japanese prototype and keeps that column name for compatibility.
 
+Alternative: if the translated build can also be decompiled into FreeMote JSON with the same scenario structure, use direct JSON alignment:
+
+```powershell
+python scripts\freemote_align_json.py `
+  --map work\scenario_map.tsv `
+  --orig-json-dir work\orig_json `
+  --translated-json-dir work\translated_json `
+  --report work\full_json_alignment.tsv `
+  --summary work\full_json_alignment_summary.tsv
+```
+
+The map file must contain at least `json_name` and `storage_name` columns. `json_name` should omit the trailing `.json`, for example `001.example.ks`.
+
+If the translated build inserted or split a small number of text rows, create an override TSV:
+
+```text
+scenario_prefix	scene_index	translated_text_ids	note
+103.	4	3,4	Merge one expanded translated line before alignment.
+```
+
+Then rerun with `--overrides work\json_alignment_overrides.tsv`. Fatal mismatches should be zero before writing bilingual JSON.
+
 ## 7. Apply Bilingual Text To FreeMote JSON
 
 ```powershell
@@ -116,9 +148,27 @@ translated line
 
 Avoid inserting KAG tags such as `[font]` into PSB text until you know the game parser supports them. Some engines use square brackets for ruby or internal text markup.
 
+For the direct JSON alignment workflow, write all bilingual JSON files in one pass:
+
+```powershell
+python scripts\freemote_align_json.py `
+  --map work\scenario_map.tsv `
+  --orig-json-dir work\orig_json `
+  --translated-json-dir work\translated_json `
+  --write-bilingual-json `
+  --output-json-dir work\bilingual_json `
+  --clean
+```
+
 ## 8. Rebuild Scenario Files
 
 Use FreeMote to rebuild JSON back to scenario files. Put rebuilt files in a patch staging directory using the logical path expected by the game:
+
+```powershell
+python scripts\freemote_batch.py build `
+  --input-dir work\bilingual_json `
+  --output-dir work\bilingual_scn
+```
 
 ```text
 work/patch_stage/
