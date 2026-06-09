@@ -160,6 +160,8 @@ python scripts\freemote_align_json.py `
   --clean
 ```
 
+In this direct JSON path, dialogue blocks in `scenes[].texts` are made bilingual, while matching choice captions in `scenes[].selects[].text` are copied from the translated JSON. The choice merge is conservative: scene order and select metadata such as `selidx`, `storage`, `target`, and `tag` must match.
+
 ## 8. Rebuild Scenario Files
 
 Use FreeMote to rebuild JSON back to scenario files. Put rebuilt files in a patch staging directory using the logical path expected by the game:
@@ -191,7 +193,7 @@ python scripts\tjs_patch_window_helptexts.py `
   --fontface "Noto Sans SC"
 ```
 
-This keeps the original buttons visible and changes only the text shown while the mouse is hovering. Treat title screens, option panels, and choices as separate adapters; they often use different scripts or image assets.
+This keeps the original buttons visible and changes only the text shown while the mouse is hovering. Treat title screens, option panels, and image assets as separate adapters; they often use different scripts or image resources.
 
 ## 9. Pack XP3 Patch
 

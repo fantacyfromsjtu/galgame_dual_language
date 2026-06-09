@@ -11,7 +11,7 @@ Dual Subtitle Tool 是一个小型工作流仓库，用于给 Kirikiri/KirikiriZ
 3. 抽取原文文本行。
 4. 从汉化版、本地化版或补丁中收集译文文本行。
 5. 对齐原文和译文。
-6. 将双语文本写回剧情 JSON。
+6. 将双语正文和翻译后的选择项文本写回剧情 JSON。
 7. 重编译剧情文件，并打包运行时 XP3 补丁。
 8. 用 KrkrPatch 或其他 Kirikiri 补丁加载器加载补丁。
 
@@ -123,6 +123,8 @@ python scripts\freemote_apply_bilingual.py --input-json work\orig_json\scene.ks.
 
 重编译后的剧情文件会作为普通脚本覆盖文件被游戏加载。
 
+在“直接 JSON 对齐”路线中，剧情正文和选择项分开处理：`scenes[].texts` 会变成双语正文，匹配到的 `scenes[].selects[].text` 会直接从翻译版 JSON 复制。选择项按钮通常空间较小，默认行为是只显示译文，不做双语双行。
+
 ## 可选：UI 悬浮提示
 
 部分 Kirikiri/Yuzusoft 游戏会把快捷菜单 hover 文案集中放在 `default.tjs` 的 `SystemConfig.windowHelpTexts` 中。做非正文 MVP 时，可以保留原 UI 贴图，只替换鼠标悬浮时出现的中文提示：
@@ -131,7 +133,7 @@ python scripts\freemote_apply_bilingual.py --input-json work\orig_json\scene.ks.
 python scripts\tjs_patch_window_helptexts.py --default-tjs work\patch_stage\default.tjs --translations work\ui_hover_translation.tsv --draw-param quickmenu.help --fontface "Noto Sans SC"
 ```
 
-这不是完整 UI 汉化；标题页、设置面板、选择项和图片文字仍需要按游戏单独适配。
+这不是完整 UI 汉化；标题页、设置面板和图片文字仍需要按游戏单独适配。
 
 完整流程见 [docs/WORKFLOW.md](docs/WORKFLOW.md)，脚本逐项用法见 [docs/SCRIPTS.md](docs/SCRIPTS.md)。
 

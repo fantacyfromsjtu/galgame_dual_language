@@ -71,7 +71,7 @@ Outputs:
 
 - `full_json_alignment.tsv`: row-level audit.
 - `full_json_alignment_summary.tsv`: scenario-level summary.
-- `bilingual_json/`: original JSON with translated lines appended.
+- `bilingual_json/`: original JSON with translated lines appended and matching `selects[].text` choice captions copied from the translated JSON.
 
 Examples:
 
@@ -79,6 +79,8 @@ Examples:
 python scripts\freemote_align_json.py --map work\scenario_map.tsv --orig-json-dir work\orig_json --translated-json-dir work\translated_json
 python scripts\freemote_align_json.py --map work\scenario_map.tsv --orig-json-dir work\orig_json --translated-json-dir work\translated_json --write-bilingual-json --clean
 ```
+
+Choice caption copying is intentionally translated-only rather than bilingual, because most choice UIs have tight button layouts. It only happens when the original and translated select metadata match.
 
 ### `freemote_apply_bilingual.py`
 
@@ -102,7 +104,7 @@ python scripts\tjs_patch_window_helptexts.py `
   --fontface "Noto Sans SC"
 ```
 
-Use this only for hover-help style UI text. It does not translate image labels, option page widgets, title menus, or scenario choices.
+Use this only for hover-help style UI text. It does not translate image labels, option page widgets, or title menus.
 
 ## Alignment And Memory Helpers
 

@@ -263,6 +263,7 @@ def compare_scenario(map_row, orig_dir, translated_dir, overrides):
 def append_bilingual(orig_data, chs_data):
     changed = 0
     skipped = 0
+    select_changed = 0
     chs_by_key = {
         (row["scene_index"], row["text_id"], row["block_index"]): row["plain_text"]
         for row in iter_text_rows(chs_data, "<chs>")
@@ -285,7 +286,30 @@ def append_bilingual(orig_data, chs_data):
                 extra = block[extra_index]
                 block[extra_index] = extra if extra.endswith("\n" + chs_text) else extra + "\n" + chs_text
         changed += 1
-    return changed, skipped
+
+    orig_scenes = orig_data.get("scenes", [])
+    chs_scenes = chs_data.get("scenes", [])
+    for scene_index, orig_scene in enumerate(orig_scenes):
+        if scene_index >= len(chs_scenes):
+            continue
+        chs_scene = chs_scenes[scene_index]
+        orig_selects = orig_scene.get("selects") or []
+        chs_selects = chs_scene.get("selects") or []
+        if not orig_selects or not chs_selects or len(orig_selects) != len(chs_selects):
+            continue
+        for orig_sel, chs_sel in zip(orig_selects, chs_selects):
+            if not isinstance(orig_sel, dict) or not isinstance(chs_sel, dict):
+                continue
+            for key in ("selidx", "storage", "target", "tag"):
+                if orig_sel.get(key) != chs_sel.get(key):
+                    break
+            else:
+                chs_text = chs_sel.get("text")
+                if isinstance(chs_text, str) and chs_text and orig_sel.get("text") != chs_text:
+                    orig_sel["text"] = chs_text
+                    select_changed += 1
+
+    return changed, skipped, select_changed
 
 
 def main():
@@ -392,15 +416,18 @@ def main():
 
     changed_total = 0
     skipped_total = 0
+    select_changed_total = 0
     for map_row, orig_data, chs_data, _orig_path in loaded:
-        changed, skipped = append_bilingual(orig_data, chs_data)
+        changed, skipped, select_changed = append_bilingual(orig_data, chs_data)
         changed_total += changed
         skipped_total += skipped
+        select_changed_total += select_changed
         out_path = output_dir / (map_row["json_name"] + ".json")
         out_path.write_text(json.dumps(orig_data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
     print(f"Wrote bilingual JSON: {output_dir}")
     print(f"Changed blocks: {changed_total}; skipped blocks: {skipped_total}")
+    print(f"Changed select captions: {select_changed_total}")
 
 
 if __name__ == "__main__":

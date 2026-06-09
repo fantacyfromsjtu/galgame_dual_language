@@ -11,7 +11,7 @@ It is not a one-click universal patcher. The useful part is the repeatable pipel
 3. Extract original text rows.
 4. Collect translated text rows from a localized build or patch.
 5. Align original and translated rows.
-6. Write bilingual text back into the scenario JSON.
+6. Write bilingual dialogue text and translated choice captions back into the scenario JSON.
 7. Rebuild scenario files and pack a runtime XP3 patch.
 8. Load the patch with KrkrPatch or another Kirikiri patch loader.
 
@@ -123,6 +123,9 @@ translated line
 
 The rebuilt scenario is then loaded by the game as an ordinary script override.
 
+For direct JSON alignment, scenario choices are handled separately from dialogue:
+`scenes[].texts` becomes bilingual, while matching `scenes[].selects[].text` captions are copied from the translated JSON. Choice buttons are usually too compact for two full lines, so the default behavior is translated-only captions.
+
 ## Optional UI Hover Help
 
 Some Kirikiri/Yuzusoft games keep quick-menu hover captions in `default.tjs` under `SystemConfig.windowHelpTexts`. For a small non-dialogue MVP, keep the original UI assets and replace only those hover captions:
@@ -131,7 +134,7 @@ Some Kirikiri/Yuzusoft games keep quick-menu hover captions in `default.tjs` und
 python scripts\tjs_patch_window_helptexts.py --default-tjs work\patch_stage\default.tjs --translations work\ui_hover_translation.tsv --draw-param quickmenu.help --fontface "Noto Sans SC"
 ```
 
-This is not a full UI translator; title screens, option panels, choices, and image-based labels still need game-specific adapters.
+This is not a full UI translator; title screens, option panels, and image-based labels still need game-specific adapters.
 
 See [docs/WORKFLOW.md](docs/WORKFLOW.md) for the full process and [docs/SCRIPTS.md](docs/SCRIPTS.md) for script-by-script usage.
 
