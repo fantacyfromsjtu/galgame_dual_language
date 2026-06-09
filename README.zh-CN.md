@@ -15,6 +15,16 @@ Dual Subtitle Tool 是一个小型工作流仓库，用于给 Kirikiri/KirikiriZ
 7. 重编译剧情文件，并打包运行时 XP3 补丁。
 8. 用 KrkrPatch 或其他 Kirikiri 补丁加载器加载补丁。
 
+## 效果展示
+
+游戏内对话框双语显示：
+
+![双语对话效果](docs/assets/dialogue-demo.png)
+
+历史记录界面双语显示：
+
+![双语 backlog 效果](docs/assets/backlog-demo.png)
+
 ## 包含内容
 
 - 用于 XP3 打包、FreeMote JSON 文本抽取、双语文本写入、内存字符串抽取和对齐的 Python 脚本。
@@ -25,7 +35,7 @@ Dual Subtitle Tool 是一个小型工作流仓库，用于给 Kirikiri/KirikiriZ
 ## 不包含内容
 
 - 不包含游戏本体。
-- 不包含游戏脚本、图片、字体、音频、截图、存档或生成后的补丁。
+- 不包含抽取出来的游戏脚本、资源包、字体、音频、存档、生成后的补丁或翻译表。
 - 不包含 FreeMote、KrkrDump、KrkrPatch、KrkrExtract 等第三方二进制工具。
 - 不包含任何商业游戏的翻译数据。
 

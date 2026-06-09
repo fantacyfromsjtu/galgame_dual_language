@@ -48,3 +48,4 @@ tools/
 !examples/**/*.tsv
 !examples/**/*.ps1
 !examples/**/*.txt
+!docs/assets/*.png

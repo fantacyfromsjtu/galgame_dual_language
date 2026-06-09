@@ -15,6 +15,16 @@ It is not a one-click universal patcher. The useful part is the repeatable pipel
 7. Rebuild scenario files and pack a runtime XP3 patch.
 8. Load the patch with KrkrPatch or another Kirikiri patch loader.
 
+## Screenshots
+
+In-game dialogue with bilingual lines:
+
+![Bilingual dialogue demo](docs/assets/dialogue-demo.png)
+
+Backlog view with bilingual history:
+
+![Bilingual backlog demo](docs/assets/backlog-demo.png)
+
 ## What Is Included
 
 - Python scripts for XP3 packing, FreeMote JSON text extraction, bilingual text injection, memory-string extraction, and alignment.
@@ -25,7 +35,7 @@ It is not a one-click universal patcher. The useful part is the repeatable pipel
 ## What Is Not Included
 
 - No game binaries.
-- No game scripts, images, fonts, audio, screenshots, save data, or generated patches.
+- No extracted game scripts, resource packs, fonts, audio, save data, generated patches, or translation tables.
 - No third-party binaries such as FreeMote, KrkrDump, KrkrPatch, or KrkrExtract.
 - No translation data from any commercial game.
 
